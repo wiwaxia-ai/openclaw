@@ -268,6 +268,12 @@ describe("buildAgentSystemPrompt", () => {
     expect(prompt).toContain(
       'do not call `message` with `action=thread-create`; use `sessions_spawn` (`runtime: "acp"`, `thread: true`) as the single thread creation path',
     );
+    expect(prompt).toContain(
+      "Put the first concrete coding instruction into `sessions_spawn.task`; do not create an idle ACP session and plan to bootstrap it later with `sessions_send`.",
+    );
+    expect(prompt).toContain(
+      "Do not infer `not executed` from missing immediate stream output alone; if the task expects file or directory outputs, verify those target paths before concluding execution failed.",
+    );
   });
 
   it("omits ACP harness guidance when ACP is disabled", () => {

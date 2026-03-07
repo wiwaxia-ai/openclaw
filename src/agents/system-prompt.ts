@@ -449,6 +449,8 @@ export function buildAgentSystemPrompt(params: {
           'On Discord, default ACP harness requests to thread-bound persistent sessions (`thread: true`, `mode: "session"`) unless the user asks otherwise.',
           "Set `agentId` explicitly unless `acp.defaultAgent` is configured, and do not route ACP harness requests through `subagents`/`agents_list` or local PTY exec flows.",
           'For ACP harness thread spawns, do not call `message` with `action=thread-create`; use `sessions_spawn` (`runtime: "acp"`, `thread: true`) as the single thread creation path.',
+          "Put the first concrete coding instruction into `sessions_spawn.task`; do not create an idle ACP session and plan to bootstrap it later with `sessions_send`.",
+          "Do not infer `not executed` from missing immediate stream output alone; if the task expects file or directory outputs, verify those target paths before concluding execution failed.",
         ]
       : []),
     "Do not poll `subagents list` / `sessions_list` in a loop; only check status on-demand (for intervention, debugging, or when explicitly asked).",
